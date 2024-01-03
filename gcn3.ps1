@@ -1,33 +1,39 @@
 # Load the required assembly
 Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Media
 
 # Create a form
 $form = New-Object Windows.Forms.Form
-$form.Text = "Audio Player"
-$form.Width = 800
-$form.Height = 600
+$form.Text = "Sound Player"
+$form.Width = 400
+$form.Height = 100
 
+# Specify the URL of the sound file
 $soundUrl = "https://cdn.pixabay.com/download/audio/2022/03/09/audio_fb0098c6da.mp3?filename=emergency-alarm-with-reverb-29431.mp3"
 
+# Download the sound file from the URL
 $webClient = New-Object System.Net.WebClient
 $soundData = $webClient.DownloadData($soundUrl)
 
+# Create a memory stream and write the sound data to it
 $memoryStream = New-Object System.IO.MemoryStream
 $memoryStream.Write($soundData, 0, $soundData.Length)
 $memoryStream.Seek(0, [System.IO.SeekOrigin]::Begin)  # Reset the stream position to the beginning
 
+# Create a SoundPlayer from the memory stream
 $soundPlayer = New-Object System.Media.SoundPlayer
 $soundPlayer.Stream = $memoryStream
+
+# Play the sound
 $soundPlayer.Play()
 
-# Clean up resources when the form is closed
-$form.Add_FormClosed({
-    $soundPlayer.Dispose()
-    $webClient.Dispose()
-    $stream.Dispose()
-    $soundPlayer.Dispose()
-    Remove-Item -Path $tempFilePath -ErrorAction SilentlyContinue
-})
+# Add the sound player to the form
+$form.Controls.Add($soundPlayer)
 
-# Show the form
 $form.ShowDialog()
+
+# Clean up resources
+$webClient.Dispose()
+$memoryStream.Dispose()
+$soundPlayer.Dispose()
+$form.Dispose()
