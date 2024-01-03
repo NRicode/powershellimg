@@ -14,7 +14,7 @@ $pictureBox.Height = $form.Height
 $pictureBox.SizeMode = [Windows.Forms.PictureBoxSizeMode]::Zoom
 
 # Specify the URL of the image
-$imageUrl = "https://example.com/path/to/your/image.jpg"
+$imageUrl = "https://upload.wikimedia.org/wikipedia/commons/6/61/Black_Circle.jpg"
 
 # Download the image from the URL
 $webClient = New-Object System.Net.WebClient
