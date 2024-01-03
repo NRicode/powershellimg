@@ -20,8 +20,9 @@ $imageUrl = "https://upload.wikimedia.org/wikipedia/commons/6/61/Black_Circle.jp
 $webClient = New-Object System.Net.WebClient
 $imageData = $webClient.DownloadData($imageUrl)
 
-# Create a memory stream from the downloaded image data
-$memoryStream = New-Object System.IO.MemoryStream($imageData)
+# Create a memory stream and write the image data to it
+$memoryStream = New-Object System.IO.MemoryStream
+$memoryStream.Write($imageData, 0, $imageData.Length)
 
 # Create an image from the memory stream
 $image = [System.Drawing.Image]::FromStream($memoryStream)
@@ -37,3 +38,4 @@ $form.ShowDialog()
 
 # Clean up resources
 $form.Dispose()
+
