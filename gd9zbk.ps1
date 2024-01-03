@@ -19,3 +19,6 @@ $mp.Add_MediaFailed({
     Write-Host "Error loading media: $($_.ErrorException.Message)"
 })
 
+while ($mp.Position -lt $mp.NaturalDuration.TimeSpan) {
+    Start-Sleep -Seconds 1
+}
