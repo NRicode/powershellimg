@@ -4,4 +4,4 @@ Write-Host "Hello, World!"
 $MediaPlayer.Play()
 
 # Clean up resources
-MediaPlayer.Dispose();
+MediaPlayer.Dispose()
