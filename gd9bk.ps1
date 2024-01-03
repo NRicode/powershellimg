@@ -8,4 +8,14 @@ $mp.Source=New-Object System.Uri("https://nyanpass.com/nyanpass.mp3")
 $mp.UnloadedBehavior='Manual'
 $mp.Position=New-Object System.TimeSpan(0, 0, 0, 30, 0)
 $mp.Volume = 1
-$mp.Play()
+
+$mp.Add_MediaOpened({
+    # Start playing the audio once it's opened
+    $mediaElement.Play()
+})
+
+# Handle errors
+$mp.Add_MediaFailed({
+    Write-Host "Error loading media: $($_.ErrorException.Message)"
+})
+
