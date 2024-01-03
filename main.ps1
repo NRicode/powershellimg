@@ -34,23 +34,6 @@ $pictureBox.Image = $image
 # Add the picture box to the form
 $form.Controls.Add($pictureBox)
 
-$soundPlayer = New-Object System.Media.SoundPlayer
-
-$audioUrl = "https://cdn.pixabay.com/download/audio/2022/03/09/audio_fb0098c6da.mp3?filename=emergency-alarm-with-reverb-29431.mp3"
-
-$audioData = $webClient.DownloadData($audioUrl)
-
-# Create a memory stream and write the audio data to it
-$memoryStream2 = New-Object System.IO.MemoryStream
-$memoryStream2.Write($audioData, 0, $audioData.Length)
-$memoryStream2.Seek(0, [System.IO.SeekOrigin]::Begin)  # Reset the stream position to the beginning
-
-# Set the stream as the audio source for the sound player
-$soundPlayer.Stream = $memoryStream2
-
-# Play the audio
-$soundPlayer.Play()
-
 # Show the form
 $form.ShowDialog()
 
