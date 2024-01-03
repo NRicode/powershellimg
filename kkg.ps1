@@ -1,6 +1,8 @@
-# Load the required assembly
+# Load the required assembly for Windows Forms
 Add-Type -AssemblyName System.Windows.Forms
-Add-Type -AssemblyName System.Media
+
+# Load the required assembly for handling media
+Add-Type -AssemblyName PresentationCore
 
 # Create a form
 $form = New-Object Windows.Forms.Form
@@ -20,8 +22,8 @@ $memoryStream = New-Object System.IO.MemoryStream
 $memoryStream.Write($soundData, 0, $soundData.Length)
 $memoryStream.Seek(0, [System.IO.SeekOrigin]::Begin)  # Reset the stream position to the beginning
 
-# Create a SoundPlayer from the memory stream
-$soundPlayer = New-Object System.Media.SoundPlayer
+# Create a Media.SoundPlayer from the memory stream
+$soundPlayer = New-Object Windows.Media.SoundPlayer
 $soundPlayer.Stream = $memoryStream
 
 # Play the sound
