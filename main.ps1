@@ -23,6 +23,7 @@ $imageData = $webClient.DownloadData($imageUrl)
 # Create a memory stream and write the image data to it
 $memoryStream = New-Object System.IO.MemoryStream
 $memoryStream.Write($imageData, 0, $imageData.Length)
+$memoryStream.Seek(0, [System.IO.SeekOrigin]::Begin)  # Reset the stream position to the beginning
 
 # Create an image from the memory stream
 $image = [System.Drawing.Image]::FromStream($memoryStream)
@@ -37,5 +38,6 @@ $form.Controls.Add($pictureBox)
 $form.ShowDialog()
 
 # Clean up resources
+$webClient.Dispose()
+$memoryStream.Dispose()
 $form.Dispose()
-
