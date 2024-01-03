@@ -17,5 +17,5 @@ $MediaPlayer.Play()
 $form.ShowDialog()
 
 # Clean up resources
-$webClient.Dispose()
+#MediaPlayer.Dispose();
 $form.Dispose()
