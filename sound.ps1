@@ -11,7 +11,7 @@ $form.Height = 600
 $soundPlayer = New-Object System.Media.SoundPlayer
 
 # Specify the URL of the audio file
-$audioUrl = "https://example.com/audio.mp3"
+$audioUrl = "https://cdn.pixabay.com/download/audio/2022/03/09/audio_fb0098c6da.mp3?filename=emergency-alarm-with-reverb-29431.mp3"
 
 # Download the audio file from the URL
 $webClient = New-Object System.Net.WebClient
