@@ -1,6 +1,5 @@
-# Load the required assemblies
+# Load the required assembly
 Add-Type -AssemblyName System.Windows.Forms
-Add-Type -AssemblyName System.Media
 
 # Create a form
 $form = New-Object Windows.Forms.Form
@@ -12,19 +11,18 @@ $form.Height = 600
 $soundPlayer = New-Object System.Media.SoundPlayer
 
 # Specify the URL of the audio file
-$audioUrl = "https://cdn.pixabay.com/download/audio/2022/03/09/audio_fb0098c6da.mp3?filename=emergency-alarm-with-reverb-29431.mp3"
+$audioUrl = "https://example.com/audio.mp3"
 
 # Download the audio file from the URL
 $webClient = New-Object System.Net.WebClient
 $audioData = $webClient.DownloadData($audioUrl)
 
-# Create a memory stream and write the audio data to it
-$memoryStream = New-Object System.IO.MemoryStream
-$memoryStream.Write($audioData, 0, $audioData.Length)
-$memoryStream.Seek(0, [System.IO.SeekOrigin]::Begin)  # Reset the stream position to the beginning
+# Create a temporary file to save the audio data
+$tempFilePath = [System.IO.Path]::GetTempFileName() + ".wav"
+[IO.File]::WriteAllBytes($tempFilePath, $audioData)
 
-# Set the stream as the audio source for the sound player
-$soundPlayer.Stream = $memoryStream
+# Set the temporary file as the audio source for the sound player
+$soundPlayer.SoundLocation = $tempFilePath
 
 # Play the audio
 $soundPlayer.Play()
@@ -33,7 +31,7 @@ $soundPlayer.Play()
 $form.Add_FormClosed({
     $soundPlayer.Dispose()
     $webClient.Dispose()
-    $memoryStream.Dispose()
+    Remove-Item -Path $tempFilePath -ErrorAction SilentlyContinue
 })
 
 # Show the form
